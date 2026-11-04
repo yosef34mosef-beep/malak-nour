@@ -1289,7 +1289,13 @@ input[type=range]:disabled{opacity:.4;cursor:not-allowed}
     font-size:clamp(1.25rem,5vw,1.55rem);
   }
   .video-gate-player{width:100%;min-width:0}
-  .video-gate-player iframe{width:100%;height:auto;aspect-ratio:16/9}
+  .video-gate-player iframe{
+    width:auto;
+    height:min(65dvh,560px);
+    max-width:100%;
+    aspect-ratio:9/16;
+    margin-inline:auto;
+  }
 }
 
 @media (max-width:380px){
@@ -1636,7 +1642,7 @@ input[type=range]:disabled{opacity:.4;cursor:not-allowed}
   let activeCardTrigger = null;
 
   const SURPRISE_VIDEO_PASSWORD = '582009';
-  const SURPRISE_VIDEO_URL = 'https://drive.google.com/file/d/1KucetDzZFobOmyeClbXRRNHcRLFauj9G/preview';
+  const SURPRISE_VIDEO_URL = 'https://www.youtube.com/embed/yRzfv8vqHlU?playsinline=1&rel=0';
 
   let opened = false;
   let lastFocused = null;
