@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>For Malak & Nour</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%E2%9D%A4%3C/text%3E%3C/svg%3E">
 <meta name="theme-color" content="#241811">
 <meta name="description" content="معمول عشانكم إنتم.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -1249,32 +1250,12 @@ input[type=range]:disabled{opacity:.4;cursor:not-allowed}
   flex:1 1 auto;
   min-height:0;
   width:100%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  overflow:hidden;
   background:#000;
 }
-.video-gate-dialog.video-mode .video-gate-player[hidden]{display:none}
-.video-gate-player video,
-.video-gate-player iframe[hidden]{display:none}
-.video-gate-dialog.video-mode .video-gate-player video:not([hidden]){
-  display:block;
+.video-gate-dialog.video-mode .video-gate-player iframe{
   width:100%;
   height:100%;
-  object-fit:contain;
-  background:#000;
-  outline:0;
-}
-/* الحجم الفعلي بيتحسب بالـ JS (fitVideo) على حسب نسبة الفيديو،
-   عشان شريط التحكم بتاع Drive يبقى لازق في أسفل الفيديو مش في نص الشاشة */
-.video-gate-dialog.video-mode .video-gate-player iframe{
-  flex:0 0 auto;
-  width:100%;
-  height:auto;
-  aspect-ratio:var(--video-ratio,16/9);
-  max-width:100%;
-  max-height:100%;
+  aspect-ratio:auto;
   border:0;
   background:#000;
 }
@@ -1582,10 +1563,9 @@ input[type=range]:disabled{opacity:.4;cursor:not-allowed}
       <p class="video-gate-error" id="videoGateError" role="alert" aria-live="polite"></p>
     </form>
     <div class="video-gate-player" id="videoGatePlayer" hidden>
-      <video id="surpriseVideoNative" controls playsinline preload="metadata"
-             controlslist="nodownload" hidden></video>
-      <iframe id="surpriseVideo" title="الفيديو المفاجأة" hidden
-              allow="autoplay; fullscreen; encrypted-media; picture-in-picture"
+      <iframe id="surpriseVideo" title="الفيديو المفاجأة"
+              allow="autoplay; encrypted-media; picture-in-picture"
+              referrerpolicy="strict-origin-when-cross-origin"
               allowfullscreen webkitallowfullscreen mozallowfullscreen></iframe>
     </div>
   </section>
@@ -1747,19 +1727,12 @@ input[type=range]:disabled{opacity:.4;cursor:not-allowed}
   const videoGateError = $('#videoGateError');
   const videoGatePlayer = $('#videoGatePlayer');
   const surpriseVideo = $('#surpriseVideo');
-  const surpriseNative = $('#surpriseVideoNative');
-  let nativeActive = false;
   const videoGateTitle = $('#videoGateTitle');
   let activeVideoGateTrigger = null;
   let activeCardTrigger = null;
 
   const SURPRISE_VIDEO_PASSWORD = '582009';
-  /* نسبة الفيديو (عرض/ارتفاع): فيديو أفقي = 16/9 ، فيديو طولي من الموبايل = 9/16 */
-  const SURPRISE_VIDEO_RATIO = 16 / 9;
-  /* ملف الفيديو المحلي (الأفضل على الموبايل): حطيه جنب index.html باسم surprise.mp4
-     لو الملف مش موجود الصفحة بترجع تلقائيًا لفيديو Drive */
-  const SURPRISE_VIDEO_FILE = './surprise.mp4';
-  const SURPRISE_VIDEO_URL ='https://drive.google.com/file/d/1KucetDzZFobOmyeClbXRRNHcRLFauj9G/preview';
+  const SURPRISE_VIDEO_URL = 'https://www.youtube.com/embed/heIWSWN5qUU?playsinline=1&rel=0';
 
   let opened = false;
   let lastFocused = null;
@@ -2274,7 +2247,7 @@ input[type=range]:disabled{opacity:.4;cursor:not-allowed}
         'أنا مش عارف إذا كنتِ مدركة قد إيه إنتِ فارقة معاها، أو قد إيه وجودك بيضيف لحياتها، بس اللي أنا متأكد منه إن فيه حاجات كتير حلوة في ملك كنت بشوفها بتظهر أكتر وهي معاكي.',
         'ومن كتر حبي لملك، بقيت أتمنى إن يكون في حياتها ناس تحبها بجد وتفرح لفرحتها، وتفضل جنبها في كل ظروفها، ولما شوفتك معاها فهمت إن بعض الحاجات اللي كنت بتمنّاها ليها موجودة اصلا.',
         'وعشان كده، أنا بجد أتمنى تفضلي في حياتها، وأتمنى إنكم تفضلوا لبعض مهما الأيام اتغيرت، لأن مش سهل تلاقوا زي بعض تاني.',
-        'ويمكن إنتِ مش متخيلة إنك عملتي إيه من غير ما تقصدي، بس أنا حبيت أقولك إنك كنتِ سبب في فرحة و راحة شخص بيحب ملك صاحبتك جدًا، وده حاجه عمري ما هنساهالك.',
+        'ويمكن إنتِ مش متخيلة إنك عملتي إيه من غير ما تقصدي، بس أنا حبيت أقولك إنك كنتِ سبب في فرحة و راحة شخص بيحب ملك صاحبتك جدًا، ودي حاجه عمري ما هنساهالك.',
         'عشان خاطري حافظيلي عليها، وخلي بالك منها، ومتخليش الأيام أو أي حاجة تافهة تنسيكم قيمة بعض.',
         'wish i had a friend like u nour ❤️'
       ]
@@ -2289,6 +2262,7 @@ input[type=range]:disabled{opacity:.4;cursor:not-allowed}
         'وعايزك تعرفي إنك مش مطالبة بأي حاجة تجاهي، لا رد معين، ولا كلام، ولا حتى إنك تحسي بنفس اللي أنا حاسه. ولو في أي وقت حسيتي إني تقيل عليكي أو إني ببوخ كدا، عايزك بس تقوليلي بكل بساطة، وعمري ما هزعل منك. بالعكس، راحتك بالنسبالي أهم بكتير من أي رغبة عندي إني أكون قريب منك.',
         'أنا مش عايز أي حاجة من اللي بعمله تكون سبب في إنك تحسي بضغط، أو إنك مطالبة ترديلي حاجة، لأن آخر حاجة ممكن أتمناها إن حاجة أنا عملتها عشان أفرحك تكون سبب في إنك تتضايقي.',
         'ويمكن مش هقدر أكون موجود في كل لحظة حلوة في حياتك، ولا أقدر أضمن إن كل أيامك تكون حلوة، بس هفضل أتمنى لك الخير والفرحة من قلبي، وأتمنى إنك تفضلي دايمًا مبسوطة، حتى في الأيام اللي مليش وجود فيها.',
+        'و والله يا ملك انا عمري ما هبطل احاول اني ابقى موجود فيها';
         'Love u , eng. koky ❤️'
       ]
     }
@@ -2325,55 +2299,6 @@ input[type=range]:disabled{opacity:.4;cursor:not-allowed}
     openCardMessage(cardMessages.malak, malakCardTrigger);
   });
 
-  /* يقيس المساحة المتاحة ويحط الـ iframe بنفس نسبة الفيديو بالظبط */
-  function fitVideo() {
-    if (videoGatePlayer.hidden) return;
-    const w = videoGatePlayer.clientWidth;
-    const h = videoGatePlayer.clientHeight;
-    if (!w || !h) return;
-    let fw = w;
-    let fh = w / SURPRISE_VIDEO_RATIO;
-    if (fh > h) { fh = h; fw = h * SURPRISE_VIDEO_RATIO; }
-    surpriseVideo.style.width = Math.floor(fw) + 'px';
-    surpriseVideo.style.height = Math.floor(fh) + 'px';
-  }
-  window.addEventListener('resize', fitVideo);
-  window.addEventListener('orientationchange', function () {
-    window.setTimeout(fitVideo, 250);
-  });
-
-  function stopNativeVideo() {
-    nativeActive = false;
-    try { surpriseNative.pause(); } catch (e) {}
-    if (surpriseNative.getAttribute('src')) {
-      surpriseNative.removeAttribute('src');
-      try { surpriseNative.load(); } catch (e) {}
-    }
-    surpriseNative.hidden = true;
-  }
-
-  function showDriveVideo() {
-    stopNativeVideo();
-    surpriseVideo.hidden = false;
-    fitVideo();
-    window.requestAnimationFrame(fitVideo);
-    surpriseVideo.src = SURPRISE_VIDEO_URL;
-  }
-
-  surpriseNative.addEventListener('error', function () {
-    if (nativeActive) showDriveVideo();
-  });
-
-  function startSurpriseVideo() {
-    surpriseVideo.hidden = true;
-    surpriseVideo.removeAttribute('src');
-    nativeActive = true;
-    surpriseNative.hidden = false;
-    surpriseNative.src = SURPRISE_VIDEO_FILE;
-    const p = surpriseNative.play();
-    if (p && typeof p.catch === 'function') p.catch(function () {});
-  }
-
   function openVideoGate(trigger) {
     activeVideoGateTrigger = trigger;
     videoGateForm.reset();
@@ -2393,17 +2318,13 @@ input[type=range]:disabled{opacity:.4;cursor:not-allowed}
   function closeVideoGate() {
     videoGateModal.classList.remove('open');
     videoGateModal.setAttribute('aria-hidden', 'true');
-    stopNativeVideo();
     surpriseVideo.removeAttribute('src');
-    surpriseVideo.hidden = true;
     videoGatePlayer.hidden = true;
     videoGateForm.hidden = false;
     videoGateForm.reset();
     videoGateError.textContent = '';
     videoGateModal.classList.remove('video-mode');
     videoGateDialog.classList.remove('video-mode');
-    surpriseVideo.style.width = '';
-    surpriseVideo.style.height = '';
     if (opened || isLetterVisible()) document.body.classList.remove('locked');
     if (activeVideoGateTrigger) activeVideoGateTrigger.focus();
   }
@@ -2424,7 +2345,8 @@ input[type=range]:disabled{opacity:.4;cursor:not-allowed}
     videoGateModal.classList.add('video-mode');
     videoGateDialog.classList.add('video-mode');
     if (audioEl) audioEl.pause();
-    startSurpriseVideo();
+    surpriseVideo.src = SURPRISE_VIDEO_URL;
+    window.setTimeout(function () { surpriseVideo.focus(); }, 60);
   });
 
   videoGateClose.addEventListener('click', closeVideoGate);
