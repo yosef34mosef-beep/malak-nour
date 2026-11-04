@@ -1261,6 +1261,7 @@ input[type=range]:disabled{opacity:.4;cursor:not-allowed}
 }
 
 @media (max-width:520px){
+  body.locked{height:100dvh}
   .scene-inner{gap:14px;padding:16px}
   .music-inner{grid-template-columns:1fr;justify-items:center;text-align:center}
   .music-info{text-align:center}
@@ -1275,6 +1276,20 @@ input[type=range]:disabled{opacity:.4;cursor:not-allowed}
   .gallery-item.reveal.in:hover,
   .gallery-item.reveal.in:focus-visible{transform:rotate(0deg) scale(1.05) translateY(-2px)}
   .card-pair{width:min(440px,100%)}
+  .video-gate-modal{
+    padding:max(12px,env(safe-area-inset-top))
+      max(12px,env(safe-area-inset-right))
+      max(12px,env(safe-area-inset-bottom))
+      max(12px,env(safe-area-inset-left));
+  }
+  .video-gate-dialog{width:100%;padding:52px 14px 18px}
+  .video-gate-title{
+    margin-bottom:.7em;
+    padding-inline:24px;
+    font-size:clamp(1.25rem,5vw,1.55rem);
+  }
+  .video-gate-player{width:100%;min-width:0}
+  .video-gate-player iframe{width:100%;height:auto;aspect-ratio:16/9}
 }
 
 @media (max-width:380px){
@@ -2136,7 +2151,7 @@ input[type=range]:disabled{opacity:.4;cursor:not-allowed}
         'أنا مش عارف إذا كنتِ مدركة قد إيه إنتِ فارقة معاها، أو قد إيه وجودك بيضيف لحياتها، بس اللي أنا متأكد منه إن فيه حاجات كتير حلوة في ملك كنت بشوفها بتظهر أكتر وهي معاكي.',
         'ومن كتر حبي لملك، بقيت أتمنى إن يكون في حياتها ناس تحبها بجد وتفرح لفرحتها، وتفضل جنبها في كل ظروفها، ولما شوفتك معاها فهمت إن بعض الحاجات اللي كنت بتمنّاها ليها موجودة اصلا.',
         'وعشان كده، أنا بجد أتمنى تفضلي في حياتها، وأتمنى إنكم تفضلوا لبعض مهما الأيام اتغيرت، لأن مش سهل تلاقوا زي بعض تاني.',
-        'ويمكن إنتِ مش متخيلة إنك عملتي إيه من غير ما تقصدي، بس أنا حبيت أقولك إنك كنتِ سبب في فرحة و راحة شخص بيحب ملك صاحبتك جدًا، ودي حاجه عمري ما هنساهالك.',
+        'ويمكن إنتِ مش متخيلة إنك عملتي إيه من غير ما تقصدي، بس أنا حبيت أقولك إنك كنتِ سبب في فرحة و راحة شخص بيحب ملك صاحبتك جدًا، وده حاجه عمري ما هنساهالك.',
         'عشان خاطري حافظيلي عليها، وخلي بالك منها، ومتخليش الأيام أو أي حاجة تافهة تنسيكم قيمة بعض.',
         'wish i had a friend like u nour ❤️'
       ]
@@ -2151,7 +2166,6 @@ input[type=range]:disabled{opacity:.4;cursor:not-allowed}
         'وعايزك تعرفي إنك مش مطالبة بأي حاجة تجاهي، لا رد معين، ولا كلام، ولا حتى إنك تحسي بنفس اللي أنا حاسه. ولو في أي وقت حسيتي إني تقيل عليكي أو إني ببوخ كدا، عايزك بس تقوليلي بكل بساطة، وعمري ما هزعل منك. بالعكس، راحتك بالنسبالي أهم بكتير من أي رغبة عندي إني أكون قريب منك.',
         'أنا مش عايز أي حاجة من اللي بعمله تكون سبب في إنك تحسي بضغط، أو إنك مطالبة ترديلي حاجة، لأن آخر حاجة ممكن أتمناها إن حاجة أنا عملتها عشان أفرحك تكون سبب في إنك تتضايقي.',
         'ويمكن مش هقدر أكون موجود في كل لحظة حلوة في حياتك، ولا أقدر أضمن إن كل أيامك تكون حلوة، بس هفضل أتمنى لك الخير والفرحة من قلبي، وأتمنى إنك تفضلي دايمًا مبسوطة، حتى في الأيام اللي مليش وجود فيها.',
-        'و والله يا ملك عمري ما هبطل احاول يبقى ليا وجود فيها';
         'Love u , eng. koky ❤️'
       ]
     }
