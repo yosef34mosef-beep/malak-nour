@@ -43,7 +43,7 @@ html{-webkit-text-size-adjust:100%}
 body{
   min-height:100%;
   background-color:#d7a2a3;
-  background-image:url("./backgraond.png");
+  background-image:url("./backgraond.jpg");
   background-position:center center;
   background-repeat:no-repeat;
   background-size:cover;
@@ -72,7 +72,7 @@ button{font-family:inherit}
 .desk{
   position:fixed;inset:0;z-index:0;pointer-events:none;
   background-color:#d7a2a3;
-  background-image:url("./backgraond.png");
+  background-image:url("./backgraond.jpg");
   background-position:center center;
   background-repeat:no-repeat;
   background-size:cover;
@@ -798,6 +798,24 @@ button{font-family:inherit}
 
 /* ---------- Final page ---------- */
 .paper--final{margin-top:clamp(30px,6vw,60px)}
+.paper--surprise{margin-top:clamp(30px,6vw,60px)}
+.surprise-content{
+  min-height:clamp(320px,48vh,520px);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+}
+.surprise-message{
+  position:relative;
+  max-width:32em;
+  margin:0 0 clamp(28px,5vw,46px);
+  color:var(--burgundy);
+  font-family:'Aref Ruqaa','Amiri',serif;
+  font-size:clamp(1.25rem,1.05rem + 1vw,1.8rem);
+  line-height:2;
+}
 
 .final-kicker{
   margin:0 0 1.1em;
@@ -1039,6 +1057,148 @@ input[type=range]:disabled{opacity:.4;cursor:not-allowed}
 }
 .replay-btn:active{transform:translateY(0)}
 
+.surprise-entry{
+  position:relative;
+  z-index:1;
+  margin-top:clamp(24px,4vw,36px);
+  text-align:center;
+}
+.surprise-btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:.55em;
+  padding:13px 27px;
+  border:1px solid rgba(154,130,93,.7);
+  border-radius:999px;
+  background:linear-gradient(145deg,#843246,var(--burgundy) 65%,#571a29);
+  box-shadow:0 9px 20px -10px rgba(75,20,32,.8),inset 0 1px 0 rgba(255,255,255,.25);
+  color:var(--ivory);
+  font-family:'Aref Ruqaa','Amiri',serif;
+  font-size:1.05rem;
+  cursor:pointer;
+  transition:transform .25s var(--ease-soft),box-shadow .25s ease;
+  -webkit-tap-highlight-color:transparent;
+}
+.surprise-btn:hover{transform:translateY(-2px);box-shadow:0 13px 24px -10px rgba(75,20,32,.85),inset 0 1px 0 rgba(255,255,255,.25)}
+.surprise-btn:active{transform:translateY(0) scale(.98)}
+
+.video-gate-modal{
+  position:fixed;
+  inset:0;
+  z-index:310;
+  display:grid;
+  place-items:center;
+  padding:clamp(12px,3vw,32px);
+  background:rgba(25,15,12,.72);
+  -webkit-backdrop-filter:blur(8px);
+  backdrop-filter:blur(8px);
+  opacity:0;
+  visibility:hidden;
+  transition:opacity .35s ease,visibility 0s linear .35s;
+}
+.video-gate-modal.open{
+  opacity:1;
+  visibility:visible;
+  transition:opacity .35s ease,visibility 0s;
+}
+.video-gate-dialog{
+  position:relative;
+  width:min(760px,100%);
+  max-height:min(88vh,900px);
+  max-height:min(88dvh,900px);
+  overflow:auto;
+  padding:clamp(30px,5vw,56px) clamp(20px,5vw,48px);
+  border:1px solid rgba(154,130,93,.48);
+  border-radius:4px;
+  background:
+    radial-gradient(120% 80% at 18% 0%,rgba(255,255,255,.62),rgba(255,255,255,0) 62%),
+    linear-gradient(170deg,var(--ivory),var(--parchment) 72%,#dcc7a4);
+  box-shadow:0 36px 90px rgba(0,0,0,.42),inset 0 0 0 5px rgba(255,255,255,.16);
+  color:var(--text);
+  transform:translateY(20px) scale(.98);
+  transition:transform .5s var(--ease-soft);
+  scrollbar-color:rgba(154,130,93,.55) transparent;
+}
+.video-gate-modal.open .video-gate-dialog{transform:translateY(0) scale(1)}
+.video-gate-dialog::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  border-radius:inherit;
+  pointer-events:none;
+  background-image:var(--grain),var(--fibers);
+  background-size:260px 260px,320px 320px;
+  opacity:.13;
+  mix-blend-mode:multiply;
+}
+.video-gate-close{
+  position:absolute;
+  top:12px;
+  inset-inline-end:12px;
+  z-index:2;
+  width:40px;
+  height:40px;
+  border:1px solid rgba(119,37,54,.2);
+  border-radius:50%;
+  background:rgba(255,255,255,.42);
+  color:var(--burgundy);
+  font-size:1.2rem;
+  cursor:pointer;
+  transition:transform .2s var(--ease-soft),background .2s ease;
+}
+.video-gate-close:hover{transform:rotate(90deg);background:rgba(255,255,255,.75)}
+.video-gate-title{
+  position:relative;
+  margin:0 0 1em;
+  padding:0 38px .7em;
+  border-bottom:1px dashed rgba(154,130,93,.45);
+  color:var(--burgundy);
+  font-family:'Aref Ruqaa','Amiri',serif;
+  font-size:clamp(1.4rem,1.1rem + 1.2vw,1.9rem);
+  text-align:center;
+}
+.video-gate-form{position:relative;display:grid;gap:12px;max-width:380px;margin:0 auto}
+.video-gate-form[hidden]{display:none}
+.video-gate-label{text-align:center;font-size:1.05rem}
+.video-gate-input{
+  width:100%;
+  padding:11px 14px;
+  border:1px solid rgba(154,130,93,.55);
+  border-radius:3px;
+  background:rgba(255,255,255,.48);
+  color:var(--text);
+  font:inherit;
+  font-variant-numeric:tabular-nums;
+  text-align:center;
+  direction:ltr;
+}
+.video-gate-submit{
+  justify-self:center;
+  padding:9px 25px;
+  border:1px solid rgba(154,130,93,.6);
+  border-radius:999px;
+  background:var(--burgundy);
+  color:var(--ivory);
+  font:inherit;
+  cursor:pointer;
+}
+.video-gate-error{
+  min-height:1.6em;
+  margin:0;
+  color:var(--burgundy);
+  text-align:center;
+}
+.video-gate-player{position:relative;z-index:1}
+.video-gate-player[hidden]{display:none}
+.video-gate-player iframe{
+  display:block;
+  width:100%;
+  aspect-ratio:16/9;
+  border:1px solid rgba(154,130,93,.5);
+  background:#1b1411;
+}
+
 /* ============================================================
    5. LIGHTBOX
    ============================================================ */
@@ -1253,6 +1413,11 @@ input[type=range]:disabled{opacity:.4;cursor:not-allowed}
     <div class="paper-sheet" aria-hidden="true"></div>
     <div class="paper-content" id="finalContent"></div>
   </article>
+
+  <article class="paper paper--surprise" aria-label="صفحة المفاجأة">
+    <div class="paper-sheet" aria-hidden="true"></div>
+    <div class="paper-content surprise-content" id="surpriseContent"></div>
+  </article>
 </main>
 
 <!-- ============================================================
@@ -1271,6 +1436,27 @@ input[type=range]:disabled{opacity:.4;cursor:not-allowed}
             aria-label="إغلاق الرسالة">✕</button>
     <h2 class="card-message-title" id="cardMessageTitle"></h2>
     <div class="card-message-body" id="cardMessageBody"></div>
+  </section>
+</div>
+
+<div class="video-gate-modal" id="videoGateModal" role="dialog" aria-modal="true"
+     aria-labelledby="videoGateTitle" aria-hidden="true">
+  <section class="video-gate-dialog" dir="rtl" tabindex="-1">
+    <button class="video-gate-close" id="videoGateClose" type="button"
+            aria-label="إغلاق النافذة">✕</button>
+    <h2 class="video-gate-title" id="videoGateTitle">كان مكتوب متضغطيش هنا 🙈</h2>
+    <form class="video-gate-form" id="videoGateForm">
+      <label class="video-gate-label" for="videoGatePassword">اكتبي الباسوورد</label>
+      <input class="video-gate-input" id="videoGatePassword" type="password"
+             inputmode="numeric" maxlength="8" autocomplete="off" required>
+      <button class="video-gate-submit" type="submit">افتحي المفاجأة</button>
+      <p class="video-gate-error" id="videoGateError" role="alert" aria-live="polite"></p>
+    </form>
+    <div class="video-gate-player" id="videoGatePlayer" hidden>
+      <iframe id="surpriseVideo" title="الفيديو المفاجأة"
+              allow="autoplay; encrypted-media; picture-in-picture"
+              allowfullscreen></iframe>
+    </div>
   </section>
 </div>
 
@@ -1356,15 +1542,15 @@ input[type=range]:disabled{opacity:.4;cursor:not-allowed}
           text: 'والي انا متأكد منه ان كلنا خسرنا كتييييررر في حياتنا صحابنا، ناس بنحبها. بس دي حاجه تخلينا نفكر في بعض تفكير الاخوات الي هو احنا مهما هنتخانق او يحصل بينا اي مشاكل في الاخر احنا ملناش حل غير بعض يارب تكونوا فهمتوني. وربنا يخليكم لبعض وليا.' },
 
         { type: 'gallery', heading: '✨❤️', items: [
-          { src: './1.jpg', alt: 'ذكرى 1' },
-          { src: './2.jpg', alt: 'ذكرى 2' },
-          { src: './3.jpg', alt: 'ذكرى 3' },
-          { src: './4.jpg', alt: 'ذكرى 4' },
-          { src: './5.jpg', alt: 'ذكرى 5' },
-          { src: './6.jpg', alt: 'ذكرى 6' },
-          { src: './7.jpg', alt: 'ذكرى 7' },
-          { src: './8.jpg', alt: 'ذكرى 8' },
-          { src: './9.jpg', alt: 'ذكرى 9' }
+          { src: 'https://lh3.googleusercontent.com/d/1JcOSvU8UZEbaB3cb70lfv65AFDPRD9Za=w1600', alt: 'ذكرى 1' },
+          { src: 'https://lh3.googleusercontent.com/d/14bHsmwUZUk3Po-fOhyXGmxam-y-T_42C=w1600', alt: 'ذكرى 2' },
+          { src: 'https://lh3.googleusercontent.com/d/1YQvqTwjYPPsAdM1J21hlC78C1QWt3TRf=w1600', alt: 'ذكرى 3' },
+          { src: 'https://lh3.googleusercontent.com/d/1Enbr0spTMacKu6evoxA2o6bYpcsMxjq2=w1600', alt: 'ذكرى 4' },
+          { src: 'https://lh3.googleusercontent.com/d/1G5xQ2ETD1oSw-KaWL9KBgcgRSYonrKIj=w1600', alt: 'ذكرى 5' },
+          { src: 'https://lh3.googleusercontent.com/d/1U3PdqUxtvEArtJrxClCd6xeTodRRnNxS=w1600', alt: 'ذكرى 6' },
+          { src: 'https://lh3.googleusercontent.com/d/1OPsoV5w1dI3KOWQabUokOuCmFpIJK18d=w1600', alt: 'ذكرى 7' },
+          { src: 'https://lh3.googleusercontent.com/d/1WbyiXmK08fjv27OHRJlNpwrOqMZrEMjH=w1600', alt: 'ذكرى 8' },
+          { src: 'https://lh3.googleusercontent.com/d/17Zy3UlM2mIXF43TGORwjA_z2gSJcu9aQ=w1600', alt: 'ذكرى 9' }
         ] }
       ],
 
@@ -1379,7 +1565,7 @@ input[type=range]:disabled{opacity:.4;cursor:not-allowed}
       title: 'دايما على بالي',
       artist: '',
       src: './music.mp3',
-      cover: './7.jpg'
+      cover: 'https://lh3.googleusercontent.com/d/1OPsoV5w1dI3KOWQabUokOuCmFpIJK18d=w1600'
     }
   };
   /* ============================================================
@@ -1411,6 +1597,7 @@ input[type=range]:disabled{opacity:.4;cursor:not-allowed}
   const paperContent  = $('#paperContent');
   const galleryContent = $('#galleryContent');
   const finalContent  = $('#finalContent');
+  const surpriseContent = $('#surpriseContent');
   const lightbox      = $('#lightbox');
   const lbImg         = $('#lbImg');
   const lbClose       = $('#lbClose');
@@ -1421,7 +1608,20 @@ input[type=range]:disabled{opacity:.4;cursor:not-allowed}
   const cardMessageTitle = $('#cardMessageTitle');
   const cardMessageBody = $('#cardMessageBody');
   const cardMessageClose = $('#cardMessageClose');
+  const videoGateModal = $('#videoGateModal');
+  const videoGateDialog = $('.video-gate-dialog', videoGateModal);
+  const videoGateClose = $('#videoGateClose');
+  const videoGateForm = $('#videoGateForm');
+  const videoGatePassword = $('#videoGatePassword');
+  const videoGateError = $('#videoGateError');
+  const videoGatePlayer = $('#videoGatePlayer');
+  const surpriseVideo = $('#surpriseVideo');
+  const videoGateTitle = $('#videoGateTitle');
+  let activeVideoGateTrigger = null;
   let activeCardTrigger = null;
+
+  const SURPRISE_VIDEO_PASSWORD = '582009';
+  const SURPRISE_VIDEO_URL = 'https://drive.google.com/file/d/1KucetDzZFobOmyeClbXRRNHcRLFauj9G/preview';
 
   let opened = false;
   let lastFocused = null;
@@ -1603,6 +1803,24 @@ input[type=range]:disabled{opacity:.4;cursor:not-allowed}
 
     finalContent.appendChild(buildMusicPlayer());
 
+    const surpriseMessage = el(
+      'p',
+      'surprise-message reveal',
+      'والله العظيم انا في قمة الاسف و العار من الي انتوا هتشوفوه بس كل دا معمول لترطيب العلاقات لا اكثر'
+    );
+    surpriseContent.appendChild(surpriseMessage);
+
+    const surpriseEntry = el('div', 'surprise-entry reveal');
+    const surpriseButton = el('button', 'surprise-btn', 'ياريت متضغطيش هنا 🙈');
+    surpriseButton.type = 'button';
+    surpriseButton.setAttribute('aria-haspopup', 'dialog');
+    surpriseButton.setAttribute('aria-controls', 'videoGateModal');
+    surpriseButton.addEventListener('click', function () {
+      openVideoGate(surpriseButton);
+    });
+    surpriseEntry.appendChild(surpriseButton);
+    surpriseContent.appendChild(surpriseEntry);
+
     if (L.closing || L.signature) {
       const closing = el('div', 'closing reveal');
       if (L.closing) closing.appendChild(el('p', null, L.closing));
@@ -1762,7 +1980,10 @@ input[type=range]:disabled{opacity:.4;cursor:not-allowed}
       playBtn.disabled = true;
       seek.disabled = true;
       vol.disabled = true;
-      err.innerHTML = msg;
+      err.textContent = window.location.protocol === 'file:'
+        ? 'ملف الأغنية موجود، لكن المتصفح لا يشغّله عند فتح الصفحة مباشرة كملف. افتحي الموقع من رابط منشور أو عبر خادم محلي.'
+        : '';
+      if (window.location.protocol !== 'file:') err.innerHTML = msg;
     }
 
     /* No source configured → graceful message, rest of the site unaffected */
@@ -1965,6 +2186,76 @@ input[type=range]:disabled{opacity:.4;cursor:not-allowed}
   malakCardTrigger.addEventListener('click', function () {
     openCardMessage(cardMessages.malak, malakCardTrigger);
   });
+
+  function openVideoGate(trigger) {
+    activeVideoGateTrigger = trigger;
+    videoGateForm.reset();
+    videoGateForm.hidden = false;
+    videoGatePlayer.hidden = true;
+    videoGateError.textContent = '';
+    videoGateTitle.textContent = 'افتكري اني قولتلك بلاش';
+    surpriseVideo.removeAttribute('src');
+    videoGateModal.classList.add('open');
+    videoGateModal.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('locked');
+    window.setTimeout(function () { videoGatePassword.focus(); }, 60);
+  }
+
+  function closeVideoGate() {
+    videoGateModal.classList.remove('open');
+    videoGateModal.setAttribute('aria-hidden', 'true');
+    surpriseVideo.removeAttribute('src');
+    videoGatePlayer.hidden = true;
+    videoGateForm.hidden = false;
+    videoGateForm.reset();
+    videoGateError.textContent = '';
+    if (opened || isLetterVisible()) document.body.classList.remove('locked');
+    if (activeVideoGateTrigger) activeVideoGateTrigger.focus();
+  }
+
+  videoGateForm.addEventListener('submit', function (e) {
+    e.preventDefault();
+    if (videoGatePassword.value !== SURPRISE_VIDEO_PASSWORD) {
+      videoGateError.textContent = 'الباسورد مش صح، جرّبي تاني ❤️';
+      videoGatePassword.value = '';
+      videoGatePassword.focus();
+      return;
+    }
+
+    videoGateError.textContent = '';
+    videoGateForm.hidden = true;
+    videoGatePlayer.hidden = false;
+    videoGateTitle.textContent = 'وريني جمال خطوتك';
+    surpriseVideo.src = SURPRISE_VIDEO_URL;
+    window.setTimeout(function () { surpriseVideo.focus(); }, 60);
+  });
+
+  videoGateClose.addEventListener('click', closeVideoGate);
+  videoGateModal.addEventListener('click', function (e) {
+    if (e.target === videoGateModal) closeVideoGate();
+  });
+  videoGateDialog.addEventListener('keydown', function (e) {
+    if (e.key === 'Tab') {
+      const focusable = videoGateDialog.querySelectorAll(
+        'button:not([disabled]), input:not([disabled]), iframe'
+      );
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    }
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && videoGateModal.classList.contains('open')) {
+      closeVideoGate();
+    }
+  });
+
   cardMessageClose.addEventListener('click', closeCardMessage);
   cardMessageModal.addEventListener('click', function (e) {
     if (e.target === cardMessageModal) closeCardMessage();
