@@ -43,7 +43,7 @@ html{-webkit-text-size-adjust:100%}
 body{
   min-height:100%;
   background-color:#d7a2a3;
-  background-image:url("./backgraond.jpg");
+  background-image:url("./backgraond.png");
   background-position:center center;
   background-repeat:no-repeat;
   background-size:cover;
@@ -72,7 +72,7 @@ button{font-family:inherit}
 .desk{
   position:fixed;inset:0;z-index:0;pointer-events:none;
   background-color:#d7a2a3;
-  background-image:url("./backgraond.jpg");
+  background-image:url("./backgraond.png");
   background-position:center center;
   background-repeat:no-repeat;
   background-size:cover;
@@ -2226,6 +2226,7 @@ input[type=range]:disabled{opacity:.4;cursor:not-allowed}
     videoGateForm.hidden = true;
     videoGatePlayer.hidden = false;
     videoGateTitle.textContent = 'وريني جمال خطوتك';
+    if (audioEl) audioEl.pause();
     surpriseVideo.src = SURPRISE_VIDEO_URL;
     window.setTimeout(function () { surpriseVideo.focus(); }, 60);
   });
