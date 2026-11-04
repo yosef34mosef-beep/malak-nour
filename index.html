@@ -1256,6 +1256,16 @@ input[type=range]:disabled{opacity:.4;cursor:not-allowed}
   background:#000;
 }
 .video-gate-dialog.video-mode .video-gate-player[hidden]{display:none}
+.video-gate-player video,
+.video-gate-player iframe[hidden]{display:none}
+.video-gate-dialog.video-mode .video-gate-player video:not([hidden]){
+  display:block;
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  background:#000;
+  outline:0;
+}
 /* الحجم الفعلي بيتحسب بالـ JS (fitVideo) على حسب نسبة الفيديو،
    عشان شريط التحكم بتاع Drive يبقى لازق في أسفل الفيديو مش في نص الشاشة */
 .video-gate-dialog.video-mode .video-gate-player iframe{
@@ -1572,7 +1582,9 @@ input[type=range]:disabled{opacity:.4;cursor:not-allowed}
       <p class="video-gate-error" id="videoGateError" role="alert" aria-live="polite"></p>
     </form>
     <div class="video-gate-player" id="videoGatePlayer" hidden>
-      <iframe id="surpriseVideo" title="الفيديو المفاجأة"
+      <video id="surpriseVideoNative" controls playsinline preload="metadata"
+             controlslist="nodownload" hidden></video>
+      <iframe id="surpriseVideo" title="الفيديو المفاجأة" hidden
               allow="autoplay; fullscreen; encrypted-media; picture-in-picture"
               allowfullscreen webkitallowfullscreen mozallowfullscreen></iframe>
     </div>
@@ -1735,6 +1747,8 @@ input[type=range]:disabled{opacity:.4;cursor:not-allowed}
   const videoGateError = $('#videoGateError');
   const videoGatePlayer = $('#videoGatePlayer');
   const surpriseVideo = $('#surpriseVideo');
+  const surpriseNative = $('#surpriseVideoNative');
+  let nativeActive = false;
   const videoGateTitle = $('#videoGateTitle');
   let activeVideoGateTrigger = null;
   let activeCardTrigger = null;
@@ -1742,6 +1756,9 @@ input[type=range]:disabled{opacity:.4;cursor:not-allowed}
   const SURPRISE_VIDEO_PASSWORD = '582009';
   /* نسبة الفيديو (عرض/ارتفاع): فيديو أفقي = 16/9 ، فيديو طولي من الموبايل = 9/16 */
   const SURPRISE_VIDEO_RATIO = 16 / 9;
+  /* ملف الفيديو المحلي (الأفضل على الموبايل): حطيه جنب index.html باسم surprise.mp4
+     لو الملف مش موجود الصفحة بترجع تلقائيًا لفيديو Drive */
+  const SURPRISE_VIDEO_FILE = './surprise.mp4';
   const SURPRISE_VIDEO_URL ='https://drive.google.com/file/d/1KucetDzZFobOmyeClbXRRNHcRLFauj9G/preview';
 
   let opened = false;
@@ -2325,6 +2342,38 @@ input[type=range]:disabled{opacity:.4;cursor:not-allowed}
     window.setTimeout(fitVideo, 250);
   });
 
+  function stopNativeVideo() {
+    nativeActive = false;
+    try { surpriseNative.pause(); } catch (e) {}
+    if (surpriseNative.getAttribute('src')) {
+      surpriseNative.removeAttribute('src');
+      try { surpriseNative.load(); } catch (e) {}
+    }
+    surpriseNative.hidden = true;
+  }
+
+  function showDriveVideo() {
+    stopNativeVideo();
+    surpriseVideo.hidden = false;
+    fitVideo();
+    window.requestAnimationFrame(fitVideo);
+    surpriseVideo.src = SURPRISE_VIDEO_URL;
+  }
+
+  surpriseNative.addEventListener('error', function () {
+    if (nativeActive) showDriveVideo();
+  });
+
+  function startSurpriseVideo() {
+    surpriseVideo.hidden = true;
+    surpriseVideo.removeAttribute('src');
+    nativeActive = true;
+    surpriseNative.hidden = false;
+    surpriseNative.src = SURPRISE_VIDEO_FILE;
+    const p = surpriseNative.play();
+    if (p && typeof p.catch === 'function') p.catch(function () {});
+  }
+
   function openVideoGate(trigger) {
     activeVideoGateTrigger = trigger;
     videoGateForm.reset();
@@ -2344,7 +2393,9 @@ input[type=range]:disabled{opacity:.4;cursor:not-allowed}
   function closeVideoGate() {
     videoGateModal.classList.remove('open');
     videoGateModal.setAttribute('aria-hidden', 'true');
+    stopNativeVideo();
     surpriseVideo.removeAttribute('src');
+    surpriseVideo.hidden = true;
     videoGatePlayer.hidden = true;
     videoGateForm.hidden = false;
     videoGateForm.reset();
@@ -2373,10 +2424,7 @@ input[type=range]:disabled{opacity:.4;cursor:not-allowed}
     videoGateModal.classList.add('video-mode');
     videoGateDialog.classList.add('video-mode');
     if (audioEl) audioEl.pause();
-    fitVideo();
-    window.requestAnimationFrame(fitVideo);
-    surpriseVideo.src = SURPRISE_VIDEO_URL;
-    window.setTimeout(function () { surpriseVideo.focus(); }, 60);
+    startSurpriseVideo();
   });
 
   videoGateClose.addEventListener('click', closeVideoGate);
